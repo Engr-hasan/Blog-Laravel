@@ -23,6 +23,7 @@ Route::group(['as'=>'admin.','prefix'=>'admin', 'namespace'=>'Admin','middleware
 	Route::resource('tag','TagController');
     Route::resource('category','CategoryController');
     Route::resource('addskill','AddSkillController');
+    Route::resource('post','PostController');
 });
 
 Route::group(['as'=>'author.','prefix'=>'author', 'namespace'=>'Author','middleware'=>['auth','author']], function

@@ -130,18 +130,17 @@ class AddSkillController extends Controller
         $appData->name_of_skill = $request->name_of_skill;
         $appData->save();
 
-//        AddSkill::where('ref_id',$appData->id)->delete();
-
+        AddSkill::where('ref_id',$appData->id)->delete();
         $count=count($request->child);
         for ($i=0; $i <$count ; $i++) {
-            $skill= AddSkill::find($request->child[$i]);
+            $skill= new AddSkill();
             $skill->ref_id     = $appData->id;
             $skill->skill_name      = $request->skill_name[$i];
             $skill->skill_status      = $request->skill_status[$i];
             $skill->skill_duration      = $request->skill_duration[$i];
             $skill->good_skill      = $request->good_skill[$i];
             $skill->bad_skill      = $request->bad_skill[$i];
-            $image = $request->file('skill_attach');
+            /*$image = $request->file('skill_attach');
             if (isset($image)) {
                 $currentDate = Carbon::now()->toDateString();
                 $imagename =$currentDate.'-'.uniqid().'.'. $image[$i]->getClientOriginalExtension();
@@ -151,12 +150,13 @@ class AddSkillController extends Controller
                 $image[$i]->move('skill_attach',$imagename);
             }else{
                 $imagename = 'default.png';
-            }
+            }*/
+            $imagename = "hi";
             $skill->skill_attach      = $imagename;
             $skill->save();
         }
 //        dd($skill);
-        Toastr::success('Skills Add successfully','Success');
+        Toastr::success('Skills Update successfully','Success');
         return redirect()->route('admin.addskill.index');
     }
 
@@ -169,8 +169,7 @@ class AddSkillController extends Controller
     public function destroy($id)
     {
         Application::find($id)->delete();
-//        AddSkill::where('ref_id',$id)->get()->delete();
         Toastr::success('Skill Successfully Deleted','Success');
-        return redirect()->route('admin.addskill.index');
+        return redirect()->back();
     }
 }

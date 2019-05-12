@@ -1,5 +1,5 @@
 @extends('layouts.backend.app')
-@section('title','category')
+@section('title','Category')
 @push('css')
 
 @endpush
@@ -10,17 +10,16 @@
                 <div class="card">
                     <div class="header">
                         <h2>
-                            Edit category
+                            Add New Category
                         </h2>
                     </div>
                     <div class="body">
-                        <form action="{{route('admin.category.update',$category->id)}}" method="POST" enctype="multipart/form-data">
+                        <form action="{{route('admin.category.store')}}" method="POST" enctype="multipart/form-data">
                         	@csrf
-                            @method('PUT')
                             <label for="email_address">Category Name </label>
                             <div class="form-group">
                                 <div class="form-line">
-                                    <input type="text" id="name" name="name" class="form-control" value="{{ $category->name }}">
+                                    <input type="text" id="name" name="name" class="form-control" placeholder="Enter Category Name">
                                 </div>
                             </div>
 

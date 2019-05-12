@@ -13,7 +13,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <h2>
-                                    All Categorys
+                                    All Categorys <span class="badge bg-cyan">{{ $categories->count() }}</span>
                                 </h2>
                             </div>
                             <div class="col-sm-6">
@@ -31,6 +31,7 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Name</th>
+                                        <th>Post Count</th>
                                         <th>Created At</th>
                                         <th>Updated At</th>
                                         <th>Action</th>
@@ -40,6 +41,7 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Name</th>
+                                        <th>Post Count</th>
                                         <th>Created At</th>
                                         <th>Updated At</th>
                                         <th>Action</th>
@@ -50,6 +52,7 @@
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $category->name }}</td>
+                                        <td><span class="badge bg-pink">{{$category->posts->count()}}</span></td>
                                         <td>{{ $category->created_at }}</td>
                                         <td>{{ $category->updated_at }}</td>
                                         <td>

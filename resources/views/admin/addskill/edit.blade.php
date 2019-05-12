@@ -36,7 +36,7 @@
                                 @foreach($addskills as $addskill)
                                 <tr>
                                     <td>
-                                        <input type='text' name="child[]" class='' value="{{ $addskill->id}}" />
+                                        <input type='text' name="child[]" class='' value="{{ $addskill->ref_id}}" />
                                     </td>
                                     <td>
                                         <input type="text" name="skill_name[]" id="skill_name" class="form-control" value="{{ $addskill->skill_name }}">
