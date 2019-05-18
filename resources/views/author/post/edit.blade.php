@@ -6,7 +6,7 @@
 @endpush
 @section('content')
     <div class="container-fluid">
-        <form action="{{route('admin.post.update',$post->id)}}" method="POST" enctype="multipart/form-data">
+        <form action="{{route('author.post.update',$post->id)}}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="row clearfix">
@@ -93,7 +93,7 @@
                         <div class="body">
                             <textarea name="body" id="tinymce">{{$post->body}}</textarea>
 
-                            <a href="{{route('admin.post.index')}}" class="btn btn-danger m-t-15 waves-effect">BACK</a>
+                            <a href="{{route('author.post.index')}}" class="btn btn-danger m-t-15 waves-effect">BACK</a>
                             <button type="submit" class="btn btn-primary m-t-15 waves-effect">SUBMIT</button>
                         </div>
                     </div>
