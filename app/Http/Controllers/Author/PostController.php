@@ -3,13 +3,16 @@
 namespace App\Http\Controllers\Author;
 
 use App\Category;
+use App\Notifications\NewAuthorPost;
 use App\Post;
 use App\Tag;
+use App\User;
 use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
@@ -88,6 +91,10 @@ class PostController extends Controller
 
         $post->categories()->attach($request->categories);
         $post->tags()->attach($request->tags);
+
+        $users = User::where('role_id',1)->get();
+        Notification::send($users, new NewAuthorPost($post));
+
         Toastr::success('Post saved Successfully','Success');
         return redirect()->route('author.post.index');
     }
@@ -100,6 +107,11 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+        if  ($post->user_id != Auth::id()){
+            Toastr::error('You are not autherized in this Post','Error');
+            return redirect()->back();
+        }
+
         return view('author.post.show',compact('post'));
     }
 
@@ -111,6 +123,11 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        if  ($post->user_id != Auth::id()){
+            Toastr::error('You are not autherized in this Post','Error');
+            return redirect()->back();
+        }
+
         $categories = Category::all();
         $tags = Tag::all();
         return view('author.post.edit', compact('post','categories','tags'));
@@ -125,6 +142,11 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        if  ($post->user_id != Auth::id()){
+            Toastr::error('You are not autherized in this Post','Error');
+            return redirect()->back();
+        }
+
         $this->validate($request,[
             'title' => 'required',
             'image' => 'image',
@@ -185,6 +207,11 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        if  ($post->user_id != Auth::id()){
+            Toastr::error('You are not autherized in this Post','Error');
+            return redirect()->back();
+        }
+
         if (Storage::disk('public')->exists('post/'.$post->image))
         {
             Storage::disk('public')->delete('post/'.$post->image);
