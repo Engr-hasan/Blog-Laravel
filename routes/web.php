@@ -11,17 +11,24 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/','HomeController@index')->name('home');
 
 Route::post('subscriber','SubscriberController@store')->name('subscriber.store');
 
 Auth::routes();
 
+Route::group(['middleware' => ['auth']],function (){
+    Route::post('favorite/{post}/add','FavoriteController@addFavoritePost')->name('post.favorite');
+});
+
 Route::group(['as'=>'admin.','prefix'=>'admin', 'namespace'=>'Admin','middleware'=>['auth','admin']], function
 (){
 	Route::get('dashboard','DeshboardController@index')->name('dashboard');
+
+	Route::get('settings','SettingsController@index')->name('settings');
+	Route::put('profile-update','ProfileController@updateProfile')->name('profile.update');
+	Route::put('password-update','ProfileController@updatePassword')->name('password.update');
+
 	Route::resource('tag','TagController');
     Route::resource('category','CategoryController');
     Route::resource('addskill','AddSkillController');
@@ -38,6 +45,11 @@ Route::group(['as'=>'admin.','prefix'=>'admin', 'namespace'=>'Admin','middleware
 Route::group(['as'=>'author.','prefix'=>'author', 'namespace'=>'Author','middleware'=>['auth','author']], function
 (){
 	Route::get('dashboard','DeshboardController@index')->name('dashboard');
+
+    Route::get('settings','SettingsController@index')->name('settings');
+    Route::put('profile-update','ProfileController@updateProfile')->name('profile.update');
+    Route::put('password-update','ProfileController@updatePassword')->name('password.update');
+
     Route::resource('post','PostController');
 
 });
