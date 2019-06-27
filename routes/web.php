@@ -13,6 +13,10 @@
 
 Route::get('/','HomeController@index')->name('home');
 
+Route::get('posts','PostController@index')->name('post.index');
+
+Route::get('post/{slug}','PostController@details')->name('post.details');
+
 Route::post('subscriber','SubscriberController@store')->name('subscriber.store');
 
 Auth::routes();
@@ -40,6 +44,8 @@ Route::group(['as'=>'admin.','prefix'=>'admin', 'namespace'=>'Admin','middleware
     Route::get('/subscriber','SubscriberController@index')->name('subscriber.index');
     Route::delete('subscriber/{subscriber}','SubscriberController@destroy')->name('subscriber.destroy');
 
+    Route::get('/favorite','FavoriteController@index')->name('favorite.index');
+
 });
 
 Route::group(['as'=>'author.','prefix'=>'author', 'namespace'=>'Author','middleware'=>['auth','author']], function
@@ -51,5 +57,7 @@ Route::group(['as'=>'author.','prefix'=>'author', 'namespace'=>'Author','middlew
     Route::put('password-update','ProfileController@updatePassword')->name('password.update');
 
     Route::resource('post','PostController');
+
+    Route::get('/favorite','FavoriteController@index')->name('favorite.index');
 
 });

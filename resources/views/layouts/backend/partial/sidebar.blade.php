@@ -58,12 +58,12 @@
                         </a>
                     </li>
 
-                    <li class="{{Request::is('admin/addskill*') ? 'active' : ''}}">
+                    {{--<li class="{{Request::is('admin/addskill*') ? 'active' : ''}}">
                         <a href="{{route('admin.addskill.index')}}">
                             <i class="material-icons">apps</i>
                             <span>AddSkill</span>
                         </a>
-                    </li>
+                    </li>--}}
 
                     <li class="{{Request::is('admin/post*') ? 'active' : ''}}">
                         <a href="{{route('admin.post.index')}}">
@@ -76,6 +76,13 @@
                         <a href="{{route('admin.post.pending')}}">
                             <i class="material-icons">library_books</i>
                             <span>Pending Post</span>
+                        </a>
+                    </li>
+
+                    <li class="{{Request::is('admin/favorite') ? 'active' : ''}}">
+                        <a href="{{route('admin.favorite.index')}}">
+                            <i class="material-icons">favorite</i>
+                            <span>Favorite Post</span>
                         </a>
                     </li>
 
@@ -120,6 +127,13 @@
                             <a href="{{route('author.post.index')}}">
                                 <i class="material-icons">library_books</i>
                                 <span>Post</span>
+                            </a>
+                        </li>
+
+                        <li class="{{Request::is('author/favorite') ? 'active' : ''}}">
+                            <a href="{{route('author.favorite.index')}}">
+                                <i class="material-icons">favorite</i>
+                                <span>Favorite Post</span>
                             </a>
                         </li>
 
