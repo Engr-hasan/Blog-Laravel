@@ -18,7 +18,7 @@
                 <!-- take a category slider -->
                 @foreach($categories as $category)
                     <div class="swiper-slide">
-                        <a class="slider-category" href="#">
+                        <a class="slider-category" href="{{route('category.posts',$category->slug)}}">
                             <div class="blog-image"><img src="{{ Storage::disk('public')->url('category/slider/'.$category->image) }}" alt="{{ $category->name }}"></div>
 
                             <div class="category">
@@ -50,7 +50,7 @@
 
                             <div class="blog-image"><img src="{{ Storage::disk('public')->url('post/'.$post->image ) }}" alt="{{ $post->title }}"></div>
 
-                            <a class="avatar" href="#"><img src="{{ Storage::disk('public')->url('profile/'.$post->user->image) }}" alt="Profile Image"></a>
+                            <a class="avatar" href="{{route('author.profile',$post->user->username)}}"><img src="{{ Storage::disk('public')->url('profile/'.$post->user->image) }}" alt="Profile Image"></a>
 
                             <div class="blog-info">
 
@@ -74,7 +74,7 @@
                                             </form>
                                         @endguest
                                     </li>
-                                    <li><a href="#"><i class="ion-chatbubble"></i>6</a></li>
+                                    <li><a href="#"><i class="ion-chatbubble"></i>{{$post->comments->count()}}</a></li>
                                     <li><a href="#"><i class="ion-eye"></i>{{ $post->view_count }}</a></li>
                                 </ul>
 

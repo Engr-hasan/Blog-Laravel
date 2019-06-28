@@ -1,5 +1,7 @@
 @extends('layouts.frontend.app')
-@section('title','Posts')
+@section('title')
+    {{$query}}
+@endsection
 @push('css')
     <link href="{{asset('assets/frontend/css/category/styles.css')}}" rel="stylesheet">
     <link href="{{asset('assets/frontend/css/category/responsive.css')}}" rel="stylesheet">
@@ -11,15 +13,16 @@
 @endpush
 @section('content')
     <div class="slider display-table center-text">
-        <h1 class="title display-table-cell"><b>All Posts</b></h1>
+        <h1 class="title display-table-cell"><b>{{$posts->count()}} Results for {{$query}}</b></h1>
     </div><!-- slider -->
 
     <section class="blog-area section">
         <div class="container">
 
             <div class="row">
-                @foreach($posts as $post)
-                    <div class="col-lg-4 col-md-6">
+                @if($posts->count() > 0)
+                    @foreach($posts as $post)
+                       <div class="col-lg-4 col-md-6">
                         <div class="card h-100">
                             <div class="single-post post-style-1">
 
@@ -57,10 +60,23 @@
                             </div><!-- single-post -->
                         </div><!-- card -->
                     </div><!-- col-lg-4 col-md-6 -->
-                @endforeach
+                    @endforeach
+                @else
+                    <div class="col-lg-12 col-md-12">
+                        <div class="card h-100">
+                            <div class="single-post post-style-1">
+                                <div class="blog-info">
+                                    <h4 class="title">
+                                        Result not Found!
+                                    </h4>
+                                </div><!-- blog-info -->
+                            </div><!-- single-post -->
+                        </div><!-- card -->
+                    </div><!-- col-lg-4 col-md-6 -->
+                @endif
             </div><!-- row -->
 
-            {{ $posts->links() }}
+{{--            {{ $posts->links() }}--}}
 {{--            <a class="load-more-btn" href="#"><b>LOAD MORE</b></a>--}}
 
         </div><!-- container -->

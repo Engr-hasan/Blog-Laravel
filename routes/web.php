@@ -17,12 +17,20 @@ Route::get('posts','PostController@index')->name('post.index');
 
 Route::get('post/{slug}','PostController@details')->name('post.details');
 
+Route::get('/category/{slug}','PostController@postByCategory')->name('category.posts');
+Route::get('/tag/{slug}','PostController@postByTag')->name('tag.posts');
+
+Route::get('profile/{username}','AuthorProfileController@profileAuthor')->name('author.profile');
+
 Route::post('subscriber','SubscriberController@store')->name('subscriber.store');
+
+Route::get('search','SearchController@searchPost')->name('search');
 
 Auth::routes();
 
 Route::group(['middleware' => ['auth']],function (){
     Route::post('favorite/{post}/add','FavoriteController@addFavoritePost')->name('post.favorite');
+    Route::post('comment/{post}','CommentController@Store')->name('comment.store');
 });
 
 Route::group(['as'=>'admin.','prefix'=>'admin', 'namespace'=>'Admin','middleware'=>['auth','admin']], function
@@ -46,6 +54,12 @@ Route::group(['as'=>'admin.','prefix'=>'admin', 'namespace'=>'Admin','middleware
 
     Route::get('/favorite','FavoriteController@index')->name('favorite.index');
 
+    Route::get('authors','AuthorController@index')->name('author.index');
+    Route::delete('authors/{id}','AuthorController@destroy')->name('author.destroy');
+
+    Route::get('comments','CommentController@index')->name('comments.index');
+    Route::delete('comments/{id}','CommentController@destroy')->name('comments.destroy');
+
 });
 
 Route::group(['as'=>'author.','prefix'=>'author', 'namespace'=>'Author','middleware'=>['auth','author']], function
@@ -60,4 +74,11 @@ Route::group(['as'=>'author.','prefix'=>'author', 'namespace'=>'Author','middlew
 
     Route::get('/favorite','FavoriteController@index')->name('favorite.index');
 
+    Route::get('comments','CommentController@index')->name('comments.index');
+    Route::delete('comments/{id}','CommentController@destroy')->name('comments.destroy');
+});
+
+View::composer('layouts.frontend.partial.footer',function($view){
+    $categories = App\Category::all();
+    $view->with('categories',$categories);
 });
